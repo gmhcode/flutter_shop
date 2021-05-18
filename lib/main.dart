@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
     //only Listeners will update with changeNotifierProvider
     return ChangeNotifierProvider(
       //Products is basically an observable object
+      //use create when instantiating a new object
       create: (ctx) => Products(),
       child: MaterialApp(
         title: 'MyShop',

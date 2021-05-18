@@ -13,41 +13,47 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///looks for nearest product
-    final product = Provider.of<Product>(context);
-    return GridTile(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ProductDetailScreen.routeName,
-            arguments: product.id,
-          );
-        },
-        child: Image.network(
-          product.imageUrl,
-          fit: BoxFit.cover,
+    final product = Provider.of<Product>(context, listen: false);
+
+    ///CONSUMER DOES THE SAME THING THAT PROVIDER DOES
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: GridTile(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              ProductDetailScreen.routeName,
+              arguments: product.id,
+            );
+          },
+          child: Image.network(
+            product.imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      footer: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: GridTileBar(
-          backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+
+        ///ONLY THE THINGS CONTAINED IN HERE WILL GET UPDATED
+        footer: Consumer<Product>(
+          builder: (ctx, product, child) => GridTileBar(
+            backgroundColor: Colors.black87,
+            leading: IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
+              color: Theme.of(context).accentColor,
             ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
-            color: Theme.of(context).accentColor,
-          ),
-          title: Text(
-            product.title,
-            textAlign: TextAlign.center,
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {},
-            color: Theme.of(context).accentColor,
+            title: Text(
+              product.title,
+              textAlign: TextAlign.center,
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {},
+              color: Theme.of(context).accentColor,
+            ),
           ),
         ),
       ),
