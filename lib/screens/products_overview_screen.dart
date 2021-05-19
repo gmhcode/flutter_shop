@@ -40,7 +40,7 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
             ),
             itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only Favorites'),
+                child: SelectableText('Only Favorites'),
                 value: FilterOptions.Favorites,
               ),
               PopupMenuItem(
