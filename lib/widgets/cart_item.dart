@@ -30,6 +30,29 @@ class CartItem1 extends StatelessWidget {
       ),
       //SWIPE RIGHT TO LEFT
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to remove the item from the cart?'),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('No'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        );
+      },
       onDismissed: (direction) {
         //this sends info to the provider, but doesnt receive it
         Provider.of<Cart>(context, listen: false).removeItem(productId);
