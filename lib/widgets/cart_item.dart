@@ -31,7 +31,7 @@ class CartItem1 extends StatelessWidget {
       //SWIPE RIGHT TO LEFT
       direction: DismissDirection.endToStart,
       confirmDismiss: (direction) {
-        showDialog(
+        return showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('Are you sure?'),
@@ -66,7 +66,9 @@ class CartItem1 extends StatelessWidget {
             leading: CircleAvatar(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: FittedBox(child: Text('\$$price')),
+                child: FittedBox(
+                  child: Text('\$$price'),
+                ),
               ),
             ),
             title: Text(title),
