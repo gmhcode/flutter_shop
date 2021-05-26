@@ -58,7 +58,6 @@ class CartItem1 extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
-        color: Colors.blue,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         child: Padding(
           padding: EdgeInsets.all(8),
