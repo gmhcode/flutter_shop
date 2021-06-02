@@ -64,6 +64,30 @@ class Products with ChangeNotifier {
   //   _showFavoritesOnly = false;
   //   notifyListeners();
   // }
+  Future<void> fetchAndSetProducts() async {
+    final url = Uri.https(
+        'flutter-shop-a0c11-default-rtdb.firebaseio.com', '/products.json');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          isFavorite: prodData['isFavorite'],
+          imageUrl: prodData['imageUrl'],
+        ));
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+    await http.get(url);
+  }
 
   Future<void> addProduct(Product product) async {
     final url = Uri.https(
@@ -98,9 +122,11 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
-    final prodIndex = _items.indexWhere((element) => element.id == id);
+  Future<void> updateProduct(String id, Product newProduct) async {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url = Uri.https('flutter-shop-a0c11-default-rtdb.firebaseio.com',
+          '/products$id.json');
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
