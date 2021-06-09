@@ -4,29 +4,8 @@ import 'package:flutter_shop/widgets/app_drawer.dart';
 import 'package:flutter_shop/widgets/order_item.dart';
 import 'package:provider/provider.dart';
 
-class OrdersScreen extends StatefulWidget {
+class OrdersScreen extends StatelessWidget {
   static const routeName = '/orders';
-
-  @override
-  _OrdersScreenState createState() => _OrdersScreenState();
-}
-
-class _OrdersScreenState extends State<OrdersScreen> {
-  var _isLoading = false;
-  @override
-  void initState() {
-    //this runs before build runs
-    // _isLoading = true;
-
-    // Provider.of<Orders>(context, listen: false)
-    //     .fetchAndSetOrders()
-    //     .then((value) {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +15,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
+      //builds widgets after a future
       body: FutureBuilder(
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (ctx, dataSnapshot) {
