@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/providers/auth.dart';
 import 'package:flutter_shop/providers/cart.dart';
 import 'package:flutter_shop/providers/orders.dart';
 import 'package:flutter_shop/providers/products.dart';
+import 'package:flutter_shop/screens/auth_screen.dart';
 import 'package:flutter_shop/screens/cart_screen.dart';
 import 'package:flutter_shop/screens/edit_product_screen.dart';
 import 'package:flutter_shop/screens/orders_screen.dart';
@@ -18,6 +20,9 @@ class MyApp extends StatelessWidget {
     //only Listeners will update with changeNotifierProvider
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Auth(),
+        ),
         ChangeNotifierProvider(
           //Products is basically an observable object
           //use create when instantiating a new object
@@ -37,7 +42,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato'),
-        home: ProductsOverViewScreen(),
+        home: AuthScreen(),
+        // ProductsOverViewScreen(),
         // home: UserProductsScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
