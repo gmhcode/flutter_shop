@@ -26,8 +26,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    final url = Uri.https(
-        'flutter-shop-a0c11-default-rtdb.firebaseio.com', '/orders.json');
+    final url =
+        Uri.https('newfluttershop-default-rtdb.firebaseio.com', '/orders.json');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -56,8 +56,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    final url = Uri.https(
-        'flutter-shop-a0c11-default-rtdb.firebaseio.com', '/orders.json');
+    final url =
+        Uri.https('newfluttershop-default-rtdb.firebaseio.com', '/orders.json');
     final timestamp = DateTime.now();
     final response = await http.post(
       url,
