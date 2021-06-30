@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/providers/auth.dart';
 import 'package:flutter_shop/providers/cart.dart';
 import 'package:flutter_shop/providers/product.dart';
 
@@ -17,6 +18,7 @@ class ProductItem extends StatelessWidget {
     ///looks for nearest product
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     ///CONSUMER DOES THE SAME THING THAT PROVIDER DOES
     return ClipRRect(
@@ -44,7 +46,7 @@ class ProductItem extends StatelessWidget {
                 product.isFavorite ? Icons.favorite : Icons.favorite_border,
               ),
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(authData.token, authData.userId);
               },
               color: Theme.of(context).accentColor,
             ),

@@ -23,16 +23,26 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (ctx) => Auth(),
           ),
-          ChangeNotifierProvider(
-            //Products is basically an observable object
-            //use create when instantiating a new object
+          ChangeNotifierProxyProvider<Auth, Products>(
+            //setter approach
             create: (ctx) => Products(),
+            update: (ctx, auth, previousProducts) {
+              previousProducts.auth = auth.token;
+              previousProducts.userIdd = auth.userId;
+              return previousProducts;
+            },
           ),
           ChangeNotifierProvider(
             create: (ctx) => Cart(),
           ),
-          ChangeNotifierProvider(
+          ChangeNotifierProxyProvider<Auth, Orders>(
             create: (ctx) => Orders(),
+            update: (ctx, auth, previousOrders) {
+              previousOrders.auth = auth.token;
+
+              // previousOrders.userIdd = auth.userId;
+              return previousOrders;
+            },
           )
         ],
         //child will receive all the providers
@@ -43,7 +53,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.purple,
                 accentColor: Colors.deepOrange,
                 fontFamily: 'Lato'),
-            home: /*auth.isAuth ? */ ProductsOverViewScreen() /*: AuthScreen()*/,
+            home: auth.isAuth ? ProductsOverViewScreen() : AuthScreen(),
             // ProductsOverViewScreen(),
             // home: UserProductsScreen(),
             routes: {
